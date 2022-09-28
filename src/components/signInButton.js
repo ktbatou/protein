@@ -2,10 +2,11 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import * as LocalAuthentication from "expo-local-authentication";
 import React, { useEffect, useState } from "react";
 import { BiometricEnrollement } from "../../hardwareCompatible";
+import { useNavigation } from "@react-navigation/native";
 
 export default function SignInButton() {
   const [isCompatible, setIsCompatible] = useState(false);
-
+  const navigation = useNavigation();
   useEffect(() => {
     (async () => {
       const compatible = await LocalAuthentication.hasHardwareAsync();
@@ -15,7 +16,7 @@ export default function SignInButton() {
 
   if (isCompatible === true) {
     return (
-      <TouchableOpacity onPress={() => BiometricEnrollement()}>
+      <TouchableOpacity onPress={() => BiometricEnrollement(navigation)}>
         <View style={styles.ButtonConatiner}>
           <Text style={styles.buttonText}>Sign In</Text>
         </View>

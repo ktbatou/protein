@@ -1,7 +1,19 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, AppState } from "react-native";
+import { useRef, useEffect } from "react";
 import SignInButton from "../components/signInButton";
+import { Restart } from "fiction-expo-restart";
+
 export default function HomeScreen() {
+  const appState = useRef(AppState.currentState);
+  useEffect(() => {
+    const subscription = AppState.addEventListener("change", (nextAppState) => {
+      if (nextAppState == "background") {
+        Restart();
+      }
+    });
+  });
+
   return (
     <View style={styles.container}>
       <View>

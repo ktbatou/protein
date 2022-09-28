@@ -1,3 +1,4 @@
+import { NavigationContainer } from "@react-navigation/native";
 import * as LocalAuthentication from "expo-local-authentication";
 import { Alert } from "react-native";
 
@@ -17,7 +18,7 @@ const HardwareCompatbility = () => {
   });
 };
 
-const BiometricEnrollement = () => {
+const BiometricEnrollement = (navigation) => {
   LocalAuthentication.isEnrolledAsync()
     .then((value) => {
       if (!value) {
@@ -27,7 +28,7 @@ const BiometricEnrollement = () => {
         );
       } else {
         console.log("success 2");
-        authentication();
+        authentication(navigation);
       }
     })
     .catch((error) => {
@@ -36,11 +37,22 @@ const BiometricEnrollement = () => {
     });
 };
 
-const authentication = () => {
+const authentication = (navigation) => {
   LocalAuthentication.authenticateAsync().then((result) => {
     if (!result.success) {
       Alert.alert("Authentication failed", result.error);
-    } else Alert.alert("Authentication succeed", "successfully authenticated");
+    } else {
+      Alert.alert("Authentication succeed", "successfully authenticated", [
+        {
+          text: "OK",
+          onPress: () =>
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "Ligands" }],
+            }),
+        },
+      ]);
+    }
   });
 };
 
