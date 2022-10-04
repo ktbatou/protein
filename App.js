@@ -1,5 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import SearchInput from "./src/components/searchInput";
 import HomeScreen from "./src/views/home";
 import LigandsList from "./src/views/ligandsScreen";
 
@@ -21,6 +22,7 @@ export default function App() {
             headerStyle: {
               backgroundColor: "#DF8F8F",
             },
+            headerTitle: () => <SearchInput/>,
             headerTintColor: "#fff",
           }}
         />
